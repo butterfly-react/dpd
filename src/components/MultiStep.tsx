@@ -17,6 +17,7 @@ import {
   InputGroup,
   Textarea,
   FormHelperText,
+  FormErrorMessage,
   InputRightElement,
 } from '@chakra-ui/react';
 
@@ -24,11 +25,25 @@ import { useToast } from '@chakra-ui/react';
 import Image from 'next/image';
 import { DeliveryProps, deliveryRegister } from '@/actions/delivery.details';
 
-const Form1 = ({ formData, setFormData }: any) => {
+const Form1 = ({
+  formData,
+  setFormData,
+  errors,
+}: {
+  formData: any;
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+  errors: { [key: string]: string };
+}) => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const isFieldInvalid = (field: string) => {
+    return !!errors[field];
   };
 
   return (
@@ -37,7 +52,7 @@ const Form1 = ({ formData, setFormData }: any) => {
         Personal Details
       </Heading>
       <Flex>
-        <FormControl mr="5%">
+        <FormControl mr="5%" isInvalid={isFieldInvalid('firstName')}>
           <FormLabel htmlFor="first-name" fontWeight={'normal'}>
             First name
           </FormLabel>
@@ -49,9 +64,12 @@ const Form1 = ({ formData, setFormData }: any) => {
             value={formData.firstName || ''}
             onChange={handleChange}
           />
+          {isFieldInvalid('firstName') && (
+            <FormErrorMessage>{errors.firstName}</FormErrorMessage>
+          )}
         </FormControl>
 
-        <FormControl>
+        <FormControl isInvalid={isFieldInvalid('lastName')}>
           <FormLabel htmlFor="last-name" fontWeight={'normal'}>
             Last name
           </FormLabel>
@@ -63,9 +81,12 @@ const Form1 = ({ formData, setFormData }: any) => {
             value={formData.lastName || ''}
             onChange={handleChange}
           />
+          {isFieldInvalid('lastName') && (
+            <FormErrorMessage>{errors.lastName}</FormErrorMessage>
+          )}
         </FormControl>
       </Flex>
-      <FormControl mt="2%">
+      <FormControl mt="2%" isInvalid={isFieldInvalid('email')}>
         <FormLabel htmlFor="email" fontWeight={'normal'}>
           Email address
         </FormLabel>
@@ -77,10 +98,13 @@ const Form1 = ({ formData, setFormData }: any) => {
           value={formData.email || ''}
           onChange={handleChange}
         />
-        <FormHelperText>We'll never share your email.</FormHelperText>
+           <FormHelperText>We'll never share your email.</FormHelperText>
+         {isFieldInvalid('email') && (
+           <FormErrorMessage>{errors.email}</FormErrorMessage>
+         )}
       </FormControl>
 
-      <FormControl>
+      <FormControl isInvalid={isFieldInvalid('password')}>
         <FormLabel htmlFor="password" fontWeight={'normal'} mt="2%">
           Password
         </FormLabel>
@@ -100,6 +124,9 @@ const Form1 = ({ formData, setFormData }: any) => {
             </Button>
           </InputRightElement>
         </InputGroup>
+        {isFieldInvalid('password') && (
+          <FormErrorMessage>{errors.password}</FormErrorMessage>
+        )}
       </FormControl>
     </>
   );
@@ -258,7 +285,7 @@ const Form2 = ({ formData, setFormData }: any) => {
   );
 };
 
-const Form3 = ({ formData, setFormData }: any) => {
+const Form3 = ({ formData, setFormData } : any) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -368,11 +395,41 @@ export default function Multistep() {
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
   const [formData, setFormData] = useState({} as DeliveryProps);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.firstName || formData.firstName.length < 3) {
+      newErrors.firstName = 'First name must be at least 3 characters';
+    }
+    if (!formData.lastName || formData.lastName.length < 3) {
+      newErrors.lastName = 'Last name must be at least 3 characters';
+    }
+    if (!formData.password || formData.password.length < 3) {
+      newErrors.password = 'Password must be at least 3 characters';
+    }
+    if (!formData.email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (step === 1 && !validateForm()) {
+      return;
+    }
+    setStep(step + 1);
+    if (step === 3) {
+      setProgress(100);
+    } else {
+      setProgress(progress + 33.33);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
-      const delivery_details = await deliveryRegister(formData);
-
+      const user = await deliveryRegister(formData);
       toast({
         title: 'Account created.',
         description: "We've created your account for you.",
@@ -409,7 +466,7 @@ export default function Multistep() {
           mx="5%"
           isAnimated
           colorScheme="red"></Progress>
-        {step === 1 ? <Form1 formData={formData} setFormData={setFormData} /> : step === 2 ? <Form2 formData={formData} setFormData={setFormData} /> : <Form3 formData={formData} setFormData={setFormData} />}
+        {step === 1 ? <Form1 formData={formData} setFormData={setFormData} errors={errors} /> : step === 2 ? <Form2 formData={formData} setFormData={setFormData} /> : <Form3 formData={formData} setFormData={setFormData} />}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -428,14 +485,7 @@ export default function Multistep() {
               <Button
                 w="7rem"
                 isDisabled={step === 3}
-                onClick={() => {
-                  setStep(step + 1);
-                  if (step === 3) {
-                    setProgress(100);
-                  } else {
-                    setProgress(progress + 33.33);
-                  }
-                }}
+                onClick={handleNext}
                 colorScheme="red"
                 variant="outline">
                 Next
