@@ -109,7 +109,7 @@ const Form1 = ({
           value={formData.email || ""}
           onChange={handleChange}
         />
-        <FormHelperText>We'll never share your email.</FormHelperText>
+        <FormHelperText>Well never share your email.</FormHelperText>
         {isFieldInvalid("email") && (
           <FormErrorMessage>{errors.email}</FormErrorMessage>
         )}
