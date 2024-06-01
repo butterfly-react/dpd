@@ -21,35 +21,62 @@ import {
 } from '@chakra-ui/react';
 
 import { useToast } from '@chakra-ui/react';
+import Image from 'next/image';
+import { DeliveryProps, deliveryRegister } from '@/actions/delivery.details';
 
-const Form1 = () => {
+const Form1 = ({ formData, setFormData }: any) => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
-        User Registration
+      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%" color="#D50030">
+        Personal Details
       </Heading>
       <Flex>
         <FormControl mr="5%">
           <FormLabel htmlFor="first-name" fontWeight={'normal'}>
             First name
           </FormLabel>
-          <Input id="first-name" placeholder="First name" />
+          <Input
+            id="first-name"
+            name="firstName"
+            placeholder="First name"
+            focusBorderColor="#D50030"
+            value={formData.firstName || ''}
+            onChange={handleChange}
+          />
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="last-name" fontWeight={'normal'}>
             Last name
           </FormLabel>
-          <Input id="last-name" placeholder="First name" />
+          <Input
+            id="last-name"
+            name="lastName"
+            placeholder="Last name"
+            focusBorderColor="#D50030"
+            value={formData.lastName || ''}
+            onChange={handleChange}
+          />
         </FormControl>
       </Flex>
       <FormControl mt="2%">
         <FormLabel htmlFor="email" fontWeight={'normal'}>
           Email address
         </FormLabel>
-        <Input id="email" type="email" />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          focusBorderColor="#D50030"
+          value={formData.email || ''}
+          onChange={handleChange}
+        />
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
 
@@ -62,9 +89,13 @@ const Form1 = () => {
             pr="4.5rem"
             type={show ? 'text' : 'password'}
             placeholder="Enter password"
+            name="password"
+            focusBorderColor="#D50030"
+            value={formData.password || ''}
+            onChange={handleChange}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button h="1.75rem" size="sm" onClick={handleClick} colorScheme="red">
               {show ? 'Hide' : 'Show'}
             </Button>
           </InputRightElement>
@@ -74,11 +105,15 @@ const Form1 = () => {
   );
 };
 
-const Form2 = () => {
+const Form2 = ({ formData, setFormData }: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
-        User Details
+      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%" color="#D50030">
+        Delivery Details
       </Heading>
       <FormControl as={GridItem} colSpan={[6, 3]}>
         <FormLabel
@@ -96,14 +131,19 @@ const Form2 = () => {
           name="country"
           autoComplete="country"
           placeholder="Select option"
-          focusBorderColor="brand.400"
+          focusBorderColor="#D50030"
           shadow="sm"
           size="sm"
           w="full"
-          rounded="md">
+          rounded="md"
+          value={formData.country || ''}
+          onChange={handleChange}
+        >
           <option>United States</option>
           <option>Canada</option>
           <option>Mexico</option>
+          <option>Hungary</option>
+          <option>Germany</option>
         </Select>
       </FormControl>
 
@@ -121,14 +161,16 @@ const Form2 = () => {
         </FormLabel>
         <Input
           type="text"
-          name="street_address"
+          name="streetAddress"
           id="street_address"
           autoComplete="street-address"
-          focusBorderColor="brand.400"
+          focusBorderColor="#D50030"
           shadow="sm"
           size="sm"
           w="full"
           rounded="md"
+          value={formData.streetAddress || ''}
+          onChange={handleChange}
         />
       </FormControl>
 
@@ -149,11 +191,13 @@ const Form2 = () => {
           name="city"
           id="city"
           autoComplete="city"
-          focusBorderColor="brand.400"
+          focusBorderColor="#D50030"
           shadow="sm"
           size="sm"
           w="full"
           rounded="md"
+          value={formData.city || ''}
+          onChange={handleChange}
         />
       </FormControl>
 
@@ -174,11 +218,13 @@ const Form2 = () => {
           name="state"
           id="state"
           autoComplete="state"
-          focusBorderColor="brand.400"
+          focusBorderColor="#D50030"
           shadow="sm"
           size="sm"
           w="full"
           rounded="md"
+          value={formData.state || ''}
+          onChange={handleChange}
         />
       </FormControl>
 
@@ -196,25 +242,31 @@ const Form2 = () => {
         </FormLabel>
         <Input
           type="text"
-          name="postal_code"
+          name="postalCode"
           id="postal_code"
           autoComplete="postal-code"
-          focusBorderColor="brand.400"
+          focusBorderColor="#D50030"
           shadow="sm"
           size="sm"
           w="full"
           rounded="md"
+          value={formData.postalCode || ''}
+          onChange={handleChange}
         />
       </FormControl>
     </>
   );
 };
 
-const Form3 = () => {
+const Form3 = ({ formData, setFormData }: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal">
-        Social Handles
+      <Heading w="100%" textAlign={'center'} fontWeight="normal" color="#D50030">
+        Tax details
       </Heading>
       <SimpleGrid columns={1} spacing={6}>
         <FormControl as={GridItem} colSpan={[3, 2]}>
@@ -225,7 +277,7 @@ const Form3 = () => {
             _dark={{
               color: 'gray.50',
             }}>
-            Website
+            TAX number
           </FormLabel>
           <InputGroup size="sm">
             <InputLeftAddon
@@ -235,13 +287,47 @@ const Form3 = () => {
               }}
               color="gray.500"
               rounded="md">
-              http://
+              Tax number (8 char)
             </InputLeftAddon>
             <Input
               type="tel"
-              placeholder="www.example.com"
-              focusBorderColor="brand.400"
+              name="taxNumber"
+              placeholder="example: (00001111)"
+              focusBorderColor="#D50030"
               rounded="md"
+              value={formData.taxNumber || ''}
+              onChange={handleChange}
+            />
+          </InputGroup>
+        </FormControl>
+        <FormControl as={GridItem} colSpan={[3, 2]}>
+          <FormLabel
+            fontSize="sm"
+            fontWeight="md"
+            color="gray.700"
+            _dark={{
+              color: 'gray.50',
+            }}>
+            TAJ number
+          </FormLabel>
+          <InputGroup size="sm">
+            <InputLeftAddon
+              bg="gray.50"
+              _dark={{
+                bg: 'gray.800',
+              }}
+              color="gray.500"
+              rounded="md">
+              Taj number (10 char)
+            </InputLeftAddon>
+            <Input
+              type="tel"
+              name="tajNumber"
+              placeholder="example: (0000011111)"
+              focusBorderColor="#D50030"
+              rounded="md"
+              value={formData.tajNumber || ''}
+              onChange={handleChange}
             />
           </InputGroup>
         </FormControl>
@@ -254,19 +340,22 @@ const Form3 = () => {
             _dark={{
               color: 'gray.50',
             }}>
-            About
+            Additional information
           </FormLabel>
           <Textarea
-            placeholder="you@example.com"
+            name="additionalInfo"
+            placeholder="Please..."
             rows={3}
             shadow="sm"
-            focusBorderColor="brand.400"
+            focusBorderColor="#D50030"
             fontSize={{
               sm: 'sm',
             }}
+            value={formData.additionalInfo || ''}
+            onChange={handleChange}
           />
           <FormHelperText>
-            Brief description for your profile. URLs are hyperlinked.
+            Any additional information to delivery
           </FormHelperText>
         </FormControl>
       </SimpleGrid>
@@ -278,6 +367,30 @@ export default function Multistep() {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const [formData, setFormData] = useState({} as DeliveryProps);
+
+  const handleSubmit = async () => {
+    try {
+      const delivery_details = await deliveryRegister(formData);
+
+      toast({
+        title: 'Account created.',
+        description: "We've created your account for you.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: 'Error.',
+        description: "There was an error creating your account.",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <>
       <Box
@@ -288,13 +401,15 @@ export default function Multistep() {
         p={6}
         m="10px auto"
         as="form">
+        <Image src='/dpd.png' alt='dpd logo' width='40' height='40' />
         <Progress
           hasStripe
           value={progress}
           mb="5%"
           mx="5%"
-          isAnimated></Progress>
-        {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+          isAnimated
+          colorScheme="red"></Progress>
+        {step === 1 ? <Form1 formData={formData} setFormData={setFormData} /> : step === 2 ? <Form2 formData={formData} setFormData={setFormData} /> : <Form3 formData={formData} setFormData={setFormData} />}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -304,7 +419,7 @@ export default function Multistep() {
                   setProgress(progress - 33.33);
                 }}
                 isDisabled={step === 1}
-                colorScheme="teal"
+                colorScheme="red"
                 variant="solid"
                 w="7rem"
                 mr="5%">
@@ -321,7 +436,7 @@ export default function Multistep() {
                     setProgress(progress + 33.33);
                   }
                 }}
-                colorScheme="teal"
+                colorScheme="red"
                 variant="outline">
                 Next
               </Button>
@@ -331,15 +446,7 @@ export default function Multistep() {
                 w="7rem"
                 colorScheme="red"
                 variant="solid"
-                onClick={() => {
-                  toast({
-                    title: 'Account created.',
-                    description: "We've created your account for you.",
-                    status: 'success',
-                    duration: 3000,
-                    isClosable: true,
-                  });
-                }}>
+                onClick={handleSubmit}>
                 Submit
               </Button>
             ) : null}
