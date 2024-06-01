@@ -517,7 +517,7 @@ export default function Multistep() {
             bg="rgba(128, 128, 128, 0.2)"
             _hover={{ bg: "rgba(128, 128, 128, 0.7)" }}
           >
-            <Link href="/dashboard">{`>>>`}</Link>
+            <Link href="/dashboard">Dashboard</Link>
           </Button>
         </Flex>
         <Progress
