@@ -1,5 +1,5 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import {
   Progress,
   Box,
@@ -19,11 +19,12 @@ import {
   FormHelperText,
   FormErrorMessage,
   InputRightElement,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import { useToast } from '@chakra-ui/react';
-import Image from 'next/image';
-import { DeliveryProps, deliveryRegister } from '@/actions/delivery.details';
+import { useToast } from "@chakra-ui/react";
+import Image from "next/image";
+import { DeliveryProps, deliveryRegister } from "@/actions/delivery.details";
+import Link from "next/link";
 
 const Form1 = ({
   formData,
@@ -37,7 +38,11 @@ const Form1 = ({
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -48,12 +53,18 @@ const Form1 = ({
 
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%" color="#D50030">
+      <Heading
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+        mb="2%"
+        color="#D50030"
+      >
         Personal Details
       </Heading>
       <Flex>
-        <FormControl mr="5%" isInvalid={isFieldInvalid('firstName')}>
-          <FormLabel htmlFor="first-name" fontWeight={'normal'}>
+        <FormControl mr="5%" isInvalid={isFieldInvalid("firstName")}>
+          <FormLabel htmlFor="first-name" fontWeight={"normal"}>
             First name
           </FormLabel>
           <Input
@@ -61,16 +72,16 @@ const Form1 = ({
             name="firstName"
             placeholder="First name"
             focusBorderColor="#D50030"
-            value={formData.firstName || ''}
+            value={formData.firstName || ""}
             onChange={handleChange}
           />
-          {isFieldInvalid('firstName') && (
+          {isFieldInvalid("firstName") && (
             <FormErrorMessage>{errors.firstName}</FormErrorMessage>
           )}
         </FormControl>
 
-        <FormControl isInvalid={isFieldInvalid('lastName')}>
-          <FormLabel htmlFor="last-name" fontWeight={'normal'}>
+        <FormControl isInvalid={isFieldInvalid("lastName")}>
+          <FormLabel htmlFor="last-name" fontWeight={"normal"}>
             Last name
           </FormLabel>
           <Input
@@ -78,16 +89,16 @@ const Form1 = ({
             name="lastName"
             placeholder="Last name"
             focusBorderColor="#D50030"
-            value={formData.lastName || ''}
+            value={formData.lastName || ""}
             onChange={handleChange}
           />
-          {isFieldInvalid('lastName') && (
+          {isFieldInvalid("lastName") && (
             <FormErrorMessage>{errors.lastName}</FormErrorMessage>
           )}
         </FormControl>
       </Flex>
-      <FormControl mt="2%" isInvalid={isFieldInvalid('email')}>
-        <FormLabel htmlFor="email" fontWeight={'normal'}>
+      <FormControl mt="2%" isInvalid={isFieldInvalid("email")}>
+        <FormLabel htmlFor="email" fontWeight={"normal"}>
           Email address
         </FormLabel>
         <Input
@@ -95,36 +106,41 @@ const Form1 = ({
           name="email"
           type="email"
           focusBorderColor="#D50030"
-          value={formData.email || ''}
+          value={formData.email || ""}
           onChange={handleChange}
         />
-           <FormHelperText>We'll never share your email.</FormHelperText>
-         {isFieldInvalid('email') && (
-           <FormErrorMessage>{errors.email}</FormErrorMessage>
-         )}
+        <FormHelperText>We'll never share your email.</FormHelperText>
+        {isFieldInvalid("email") && (
+          <FormErrorMessage>{errors.email}</FormErrorMessage>
+        )}
       </FormControl>
 
-      <FormControl isInvalid={isFieldInvalid('password')}>
-        <FormLabel htmlFor="password" fontWeight={'normal'} mt="2%">
+      <FormControl isInvalid={isFieldInvalid("password")}>
+        <FormLabel htmlFor="password" fontWeight={"normal"} mt="2%">
           Password
         </FormLabel>
         <InputGroup size="md">
           <Input
             pr="4.5rem"
-            type={show ? 'text' : 'password'}
+            type={show ? "text" : "password"}
             placeholder="Enter password"
             name="password"
             focusBorderColor="#D50030"
-            value={formData.password || ''}
+            value={formData.password || ""}
             onChange={handleChange}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick} colorScheme="red">
-              {show ? 'Hide' : 'Show'}
+            <Button
+              h="1.75rem"
+              size="sm"
+              onClick={handleClick}
+              colorScheme="red"
+            >
+              {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
-        {isFieldInvalid('password') && (
+        {isFieldInvalid("password") && (
           <FormErrorMessage>{errors.password}</FormErrorMessage>
         )}
       </FormControl>
@@ -133,13 +149,23 @@ const Form1 = ({
 };
 
 const Form2 = ({ formData, setFormData }: any) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%" color="#D50030">
+      <Heading
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+        mb="2%"
+        color="#D50030"
+      >
         Delivery Details
       </Heading>
       <FormControl as={GridItem} colSpan={[6, 3]}>
@@ -149,8 +175,9 @@ const Form2 = ({ formData, setFormData }: any) => {
           fontWeight="md"
           color="gray.700"
           _dark={{
-            color: 'gray.50',
-          }}>
+            color: "gray.50",
+          }}
+        >
           Country / Region
         </FormLabel>
         <Select
@@ -163,7 +190,7 @@ const Form2 = ({ formData, setFormData }: any) => {
           size="sm"
           w="full"
           rounded="md"
-          value={formData.country || ''}
+          value={formData.country || ""}
           onChange={handleChange}
         >
           <option>United States</option>
@@ -181,9 +208,10 @@ const Form2 = ({ formData, setFormData }: any) => {
           fontWeight="md"
           color="gray.700"
           _dark={{
-            color: 'gray.50',
+            color: "gray.50",
           }}
-          mt="2%">
+          mt="2%"
+        >
           Street address
         </FormLabel>
         <Input
@@ -196,7 +224,7 @@ const Form2 = ({ formData, setFormData }: any) => {
           size="sm"
           w="full"
           rounded="md"
-          value={formData.streetAddress || ''}
+          value={formData.streetAddress || ""}
           onChange={handleChange}
         />
       </FormControl>
@@ -208,9 +236,10 @@ const Form2 = ({ formData, setFormData }: any) => {
           fontWeight="md"
           color="gray.700"
           _dark={{
-            color: 'gray.50',
+            color: "gray.50",
           }}
-          mt="2%">
+          mt="2%"
+        >
           City
         </FormLabel>
         <Input
@@ -223,7 +252,7 @@ const Form2 = ({ formData, setFormData }: any) => {
           size="sm"
           w="full"
           rounded="md"
-          value={formData.city || ''}
+          value={formData.city || ""}
           onChange={handleChange}
         />
       </FormControl>
@@ -235,9 +264,10 @@ const Form2 = ({ formData, setFormData }: any) => {
           fontWeight="md"
           color="gray.700"
           _dark={{
-            color: 'gray.50',
+            color: "gray.50",
           }}
-          mt="2%">
+          mt="2%"
+        >
           State / Province
         </FormLabel>
         <Input
@@ -250,7 +280,7 @@ const Form2 = ({ formData, setFormData }: any) => {
           size="sm"
           w="full"
           rounded="md"
-          value={formData.state || ''}
+          value={formData.state || ""}
           onChange={handleChange}
         />
       </FormControl>
@@ -262,9 +292,10 @@ const Form2 = ({ formData, setFormData }: any) => {
           fontWeight="md"
           color="gray.700"
           _dark={{
-            color: 'gray.50',
+            color: "gray.50",
           }}
-          mt="2%">
+          mt="2%"
+        >
           ZIP / Postal
         </FormLabel>
         <Input
@@ -277,7 +308,7 @@ const Form2 = ({ formData, setFormData }: any) => {
           size="sm"
           w="full"
           rounded="md"
-          value={formData.postalCode || ''}
+          value={formData.postalCode || ""}
           onChange={handleChange}
         />
       </FormControl>
@@ -285,14 +316,23 @@ const Form2 = ({ formData, setFormData }: any) => {
   );
 };
 
-const Form3 = ({ formData, setFormData } : any) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+const Form3 = ({ formData, setFormData }: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" color="#D50030">
+      <Heading
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+        color="#D50030"
+      >
         Tax details
       </Heading>
       <SimpleGrid columns={1} spacing={6}>
@@ -302,18 +342,20 @@ const Form3 = ({ formData, setFormData } : any) => {
             fontWeight="md"
             color="gray.700"
             _dark={{
-              color: 'gray.50',
-            }}>
+              color: "gray.50",
+            }}
+          >
             TAX number
           </FormLabel>
           <InputGroup size="sm">
             <InputLeftAddon
               bg="gray.50"
               _dark={{
-                bg: 'gray.800',
+                bg: "gray.800",
               }}
               color="gray.500"
-              rounded="md">
+              rounded="md"
+            >
               Tax number (8 char)
             </InputLeftAddon>
             <Input
@@ -322,7 +364,7 @@ const Form3 = ({ formData, setFormData } : any) => {
               placeholder="example: (00001111)"
               focusBorderColor="#D50030"
               rounded="md"
-              value={formData.taxNumber || ''}
+              value={formData.taxNumber || ""}
               onChange={handleChange}
             />
           </InputGroup>
@@ -333,18 +375,20 @@ const Form3 = ({ formData, setFormData } : any) => {
             fontWeight="md"
             color="gray.700"
             _dark={{
-              color: 'gray.50',
-            }}>
+              color: "gray.50",
+            }}
+          >
             TAJ number
           </FormLabel>
           <InputGroup size="sm">
             <InputLeftAddon
               bg="gray.50"
               _dark={{
-                bg: 'gray.800',
+                bg: "gray.800",
               }}
               color="gray.500"
-              rounded="md">
+              rounded="md"
+            >
               Taj number (10 char)
             </InputLeftAddon>
             <Input
@@ -353,7 +397,7 @@ const Form3 = ({ formData, setFormData } : any) => {
               placeholder="example: (0000011111)"
               focusBorderColor="#D50030"
               rounded="md"
-              value={formData.tajNumber || ''}
+              value={formData.tajNumber || ""}
               onChange={handleChange}
             />
           </InputGroup>
@@ -365,8 +409,9 @@ const Form3 = ({ formData, setFormData } : any) => {
             fontWeight="md"
             color="gray.700"
             _dark={{
-              color: 'gray.50',
-            }}>
+              color: "gray.50",
+            }}
+          >
             Additional information
           </FormLabel>
           <Textarea
@@ -376,9 +421,9 @@ const Form3 = ({ formData, setFormData } : any) => {
             shadow="sm"
             focusBorderColor="#D50030"
             fontSize={{
-              sm: 'sm',
+              sm: "sm",
             }}
-            value={formData.additionalInfo || ''}
+            value={formData.additionalInfo || ""}
             onChange={handleChange}
           />
           <FormHelperText>
@@ -400,16 +445,19 @@ export default function Multistep() {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
     if (!formData.firstName || formData.firstName.length < 3) {
-      newErrors.firstName = 'First name must be at least 3 characters';
+      newErrors.firstName = "First name must be at least 3 characters";
     }
     if (!formData.lastName || formData.lastName.length < 3) {
-      newErrors.lastName = 'Last name must be at least 3 characters';
+      newErrors.lastName = "Last name must be at least 3 characters";
     }
     if (!formData.password || formData.password.length < 3) {
-      newErrors.password = 'Password must be at least 3 characters';
+      newErrors.password = "Password must be at least 3 characters";
     }
-    if (!formData.email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+    if (
+      !formData.email ||
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+    ) {
+      newErrors.email = "Email is invalid";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -431,17 +479,17 @@ export default function Multistep() {
     try {
       const user = await deliveryRegister(formData);
       toast({
-        title: 'Account created.',
+        title: "Account created.",
         description: "We've created your account for you.",
-        status: 'success',
+        status: "success",
         duration: 3000,
         isClosable: true,
       });
     } catch (error) {
       toast({
-        title: 'Error.',
+        title: "Error.",
         description: "There was an error creating your account.",
-        status: 'error',
+        status: "error",
         duration: 3000,
         isClosable: true,
       });
@@ -457,16 +505,40 @@ export default function Multistep() {
         maxWidth={800}
         p={6}
         m="10px auto"
-        as="form">
-        <Image src='/dpd.png' alt='dpd logo' width='40' height='40' />
+        as="form"
+      >
+        <Flex justifyContent="space-between" alignItems="center" mb={4}>
+          <Image src="/dpd.png" alt="dpd logo" width="40" height="40" />
+          <Button
+            variant="outline"
+            colorScheme="gray"
+            size="sm"
+            bg="rgba(128, 128, 128, 0.2)"
+            _hover={{ bg: "rgba(128, 128, 128, 0.7)" }}
+          
+          >
+            <Link href='/dashboard'>>>></Link>
+          </Button>
+        </Flex>
         <Progress
           hasStripe
           value={progress}
           mb="5%"
           mx="5%"
           isAnimated
-          colorScheme="red"></Progress>
-        {step === 1 ? <Form1 formData={formData} setFormData={setFormData} errors={errors} /> : step === 2 ? <Form2 formData={formData} setFormData={setFormData} /> : <Form3 formData={formData} setFormData={setFormData} />}
+          colorScheme="red"
+        ></Progress>
+        {step === 1 ? (
+          <Form1
+            formData={formData}
+            setFormData={setFormData}
+            errors={errors}
+          />
+        ) : step === 2 ? (
+          <Form2 formData={formData} setFormData={setFormData} />
+        ) : (
+          <Form3 formData={formData} setFormData={setFormData} />
+        )}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -479,7 +551,8 @@ export default function Multistep() {
                 colorScheme="red"
                 variant="solid"
                 w="7rem"
-                mr="5%">
+                mr="5%"
+              >
                 Back
               </Button>
               <Button
@@ -487,7 +560,8 @@ export default function Multistep() {
                 isDisabled={step === 3}
                 onClick={handleNext}
                 colorScheme="red"
-                variant="outline">
+                variant="outline"
+              >
                 Next
               </Button>
             </Flex>
@@ -496,7 +570,8 @@ export default function Multistep() {
                 w="7rem"
                 colorScheme="red"
                 variant="solid"
-                onClick={handleSubmit}>
+                onClick={handleSubmit}
+              >
                 Submit
               </Button>
             ) : null}
