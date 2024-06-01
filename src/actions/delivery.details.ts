@@ -1,30 +1,26 @@
-'use server'
-import { client } from "@/lib/prisma";
-
-
-
+"use server";
+import { prisma } from "@/lib/prisma";
 
 export type DeliveryProps = {
- 
-        firstName: string;
-        lastName: string;
-        email: string;
-        password: string;
-        country: string;
-        streetAddress: string;
-        city: string;
-        state: string;
-        postalCode: string;
-        taxNumber: string;
-        tajNumber: string;
-        additionalInfo?: string;
- 
-}
-
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  country: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  taxNumber: string;
+  tajNumber: string;
+  additionalInfo?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
 export const deliveryRegister = async (data: DeliveryProps) => {
-
   try {
-    const user = await client.user.create({
+    const user = await prisma.user.create({
       data: {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -42,6 +38,6 @@ export const deliveryRegister = async (data: DeliveryProps) => {
     });
     return user;
   } catch (error) {
-    throw new Error('Unable to save user');
+    throw new Error("Unable to save user");
   }
 };
