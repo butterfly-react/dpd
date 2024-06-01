@@ -509,15 +509,15 @@ export default function Multistep() {
       >
         <Flex justifyContent="space-between" alignItems="center" mb={4}>
           <Image src="/dpd.png" alt="dpd logo" width="40" height="40" />
+
           <Button
             variant="outline"
             colorScheme="gray"
             size="sm"
             bg="rgba(128, 128, 128, 0.2)"
             _hover={{ bg: "rgba(128, 128, 128, 0.7)" }}
-          
           >
-            <Link href='/dashboard'>{'>>>'}</Link>
+            <Link href="/dashboard">{`>>>`}</Link>
           </Button>
         </Flex>
         <Progress

@@ -39,7 +39,7 @@ const EditableUserList = () => {
       }
     };
     fetchUsers();
-  }, []);
+  }, [toast]);
 
   const handleEditClick = (user: DeliveryProps) => {
     setEditUserId(user.id);
